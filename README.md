@@ -3,10 +3,16 @@
 # [`ansi.js`] ANSI Escape Sequences @ JavaScript/node.js
 
 ## Index
-//**TODO**/
+1. [Download](#download)
+    * [Polyfill](#polyfill)
+2. [Colors](#colors)
+    * [Where it began](#where-it-began)
+    * [How it works](#how-it-works)
+3. [References](#references)
+4. [Copyright and License](#copyright-and-license)
 
-## //**TODO**//
-//**TODO**/
+## Introduction
+//**TODO**/ (.. here and everywhere, including the code);
 
 ## Download
 * [Version **v0.0.0**](js/ansi.js) (created **2024-09-12**) [**TODO**!!1]
@@ -24,14 +30,14 @@ necessary here. .. Saves time and space.
 This is where this project 'began' (after many other attempts, mostyle within my
 [**`v4`**](https://github.com/kekse1/v4/)/[**`lib.js`**](https://github.com/kekse1/lib.js/)).
 
-### The beginning
+### Where it began
 For more comfort, I overrided the **`[39m`** and **`[49m`** this way, that they'll
 not reset the colors to the regular ones, but to the **last used** colors (except
 after any 'real' reset **`[0m`**).
 
 This already works, but there is more yet to come..
 
-#### How it works
+### How it works
 I'm overridine the regular `.write()` function of the `(Write-)Stream` (which also holds for
 the `process.stdio`), so it'll only save the last used color(s) when it's really writing some
 data, not only on generating the sequences (see the functions in my `ANSI` class).
