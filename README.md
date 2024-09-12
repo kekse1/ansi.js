@@ -18,8 +18,10 @@
 //**TODO**/ (.. here and everywhere, including the code);
 
 ## Download
-* [Version **v0.0.0**](js/ansi.js) (created **2024-09-12**) [**TODO**!!1]
+* [Version **v0.0.0**](js/ansi.js) (created **09/2024**)
 * [**Polyfill**](js/polyfill.js)
+
+//**TODO**/
 
 ### Polyfill
 The [polyfill](js/polyfill.js) is important since I created this project
