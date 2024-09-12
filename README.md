@@ -5,13 +5,14 @@
 (//**TODO**/provide the url (kekse.biz) for this proj/repo);
 
 ## Index
-1. [Download](#download)
+1. [Introduction](#introduction)
+2. [Download](#download)
     * [Polyfill](#polyfill)
-2. [Colors](#colors)
+3. [Colors](#colors)
     * [Where it began](#where-it-began)
     * [How it works](#how-it-works)
-3. [References](#references)
-4. [Copyright and License](#copyright-and-license)
+4. [References](#references)
+5. [Copyright and License](#copyright-and-license)
 
 ## Introduction
 //**TODO**/ (.. here and everywhere, including the code);
