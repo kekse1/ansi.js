@@ -25,9 +25,9 @@ This is where this project 'began' (after many other attempts, mostyle within my
 [**`v4`**](https://github.com/kekse1/v4/)/[**`lib.js`**](https://github.com/kekse1/lib.js/)).
 
 ### The beginning
-For more comfort, I overrided the `[39m` and `[49m` this way, that they'll not reset the
-colors to the regular ones, but to the **last used** colors (except when starting or after
-the 'real' reset `[0m`.
+For more comfort, I overrided the **`[39m`** and **`[49m`** this way, that they'll
+not reset the colors to the regular ones, but to the **last used** colors (except
+after any 'real' reset **`[0m`**).
 
 This already works, but there is more yet to come..
 
