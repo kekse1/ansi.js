@@ -27,10 +27,6 @@
 The [polyfill](js/polyfill.js) is important since I created this project
 within another one, where I massively extended the base functions/objects, etc.
 
-Since I'm using this one also there, I decided not to change the sources,
-but provide this polyfill here, with only the extensions which are really
-necessary here. .. Saves time and space.
-
 ## Colors
 This is where this project 'began' (after many other attempts, mostyle within my
 [**`v4`**](https://github.com/kekse1/v4/)/[**`lib.js`**](https://github.com/kekse1/lib.js/)).
