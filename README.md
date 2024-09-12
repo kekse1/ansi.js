@@ -37,7 +37,7 @@ the `process.stdio`), so it'll only save the last used color(s) when it's really
 data, not only on generating the sequences (see the functions in my `ANSI` class).
 
 If you work with partial data, it's really not difficult: so I'm using a state object within
-the streams, that parsing etc. can resume laters (e.g. if your sequences start, but end within
+the streams, that parsing etc. can resume later (e.g. if your sequences start, but end within
 the next chunk(s)).
 
 ## References
