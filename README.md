@@ -17,9 +17,15 @@
 ## Introduction
 //**TODO**/ (.. here and everywhere, including the code);
 
+## Status
+My own version is a bit bigger, but the most parts are available [here](#download).
+
+The _polyfill_ is still missing, but it's on my TODO list. Either you wait for it,
+or feel free to create it (even though I'm **not** going to upload your version here).
+
 ## Download
-* [Version **v0.0.0**](js/ansi.js) (created **09/2024**)
-* [**Polyfill**](js/polyfill.js)
+* [Version **v1.0.0**](js/ansi.js) (created **2024-09-15**)
+* [**Polyfill**](js/polyfill.js) (still **TODO**!)
 
 //**TODO**/
 
@@ -32,9 +38,11 @@ This is where this project 'began' (after many other attempts, mostyle within my
 [**`v4`**](https://github.com/kekse1/v4/)/[**`lib.js`**](https://github.com/kekse1/lib.js/)).
 
 ### Where it began
-For more comfort, I overrided the **`[39m`** and **`[49m`** this way, that they'll
-not reset the colors to the regular ones, but to the **last used** colors (except
-after any 'real' reset **`[0m`**).
+For more comfort, I extended the ANSI sequences by **`[390m`** and **`[490m`** (configurable,
+see the constants on top of the file), so It can easily 'reset' the colors (both foreground
+and background) back to their **last state**, not only the real 'default colors'; in this
+sense: both sequences are originally 'inspired' by the 'reset to default colors' ones, so
+**`[39m`** and **`[49m`**.
 
 This already works, but there is more yet to come..
 
@@ -42,10 +50,6 @@ This already works, but there is more yet to come..
 I'm overridine the regular `.write()` function of the `(Write-)Stream` (which also holds for
 the `process.stdio`), so it'll only save the last used color(s) when it's really writing some
 data, not only on generating the sequences (see the functions in my `ANSI` class).
-
-If you work with partial data, it's really not difficult: so I'm using a state object within
-the streams, so parsing can resume later (e.g. if your sequences start, but end within
-the next chunk(s)).
 
 ## References
 * https://en.m.wikipedia.org/wiki/ANSI_escape_code
