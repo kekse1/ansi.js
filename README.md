@@ -19,7 +19,7 @@
 My own version is a bit bigger, but the most parts are available [here](#download).
 
 The _polyfill_ is still missing, but it's on my TODO list. Either you wait for it,
-or feel free to create one (even though I'm **not** going to upload your version here).
+or feel free to create one. ... if you can't wait.
 
 ## Download
 * [Version **v1.0.0**](js/ansi.js) (created **2024-09-15**)
