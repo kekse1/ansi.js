@@ -2,8 +2,6 @@
 
 # ANSI Escape Sequences @ JavaScript/node.js
 
-(//**TODO**/provide the url (kekse.biz) for this proj/repo);
-
 ## Index
 1. [Introduction](#introduction)
 2. [Download](#download)
@@ -15,7 +13,7 @@
 5. [Copyright and License](#copyright-and-license)
 
 ## Introduction
-//**TODO**/ (.. here and everywhere, including the code);
+//**TODO**/ ...
 
 ## Status
 My own version is a bit bigger, but the most parts are available [here](#download).
