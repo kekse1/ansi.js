@@ -4,6 +4,13 @@
  * v1.0.0
  */
 
+/*
+ * TODO * more sequences
+ * TODO * raw terminal control
+ * TODO * maybe `node:readline` (from `js/shared/server.js`)?
+ * TODO * and more ..
+ */
+
 //
 const DEFAULT_THROW = true;
 const DEFAULT_COLORS = true;
