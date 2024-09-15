@@ -223,8 +223,14 @@ class ANSI
 	// TODO / I *think* atm the 3/4 bit colors are not fully supported, ..
 	// ... since they've some alternative escape sequence syntax'. ...?
 	//
-	static colorFilter(_data, _carrier = null)
+	static colorFilter(_data, _carrier)
 	{
+		//
+		if(!_carrier)
+		{
+			throw new Error('Missing _carrier argument (for the state(s))!');
+		}
+
 		//
 		var result = '';
 		const parsed = ANSI.parse(_data);
