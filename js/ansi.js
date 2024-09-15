@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.0.0
+ * v1.0.1
  */
 
 /*
@@ -243,21 +243,11 @@ class ANSI
 		const parsed = ANSI.parse(_data);
 		
 		//
-		const state = Object.create(null);
+		const state = _carrier.__ansi = Object.null({
+			foreground: [],
+			background: []
+		}, _carrier.__ansi);
 		
-		if(_carrier.__ansi)
-		{
-			state.foreground = (_carrier.__ansi.foreground || []);
-			state.background = (_carrier.__ansi.background || []);
-		}
-		else
-		{
-			state.foreground = [];
-			state.background = [];
-		}
-		
-		_carrier.__ansi = state;
-
 		//
 		const getBackground = () => {
 			if(state.background[1]) return state.background[1];
@@ -506,6 +496,9 @@ if(typeof global.ANSI.String === 'undefined')
 	global.ANSI.String = String;
 	
 	//
+	Reflect.defineProperty(String, 'defaultFG', { value: () => (ESC + '[39m') });
+	Reflect.defineProperty(String, 'defaultBG', { value: () => (ESC + '[49m') });
+
 	Reflect.defineProperty(String.prototype, 'fg', { value: function(_red, _green, _blue, _reset = DEFAULT_RESET)
 	{
 		if(!bool(_reset)) _reset = (this.length > 0);
