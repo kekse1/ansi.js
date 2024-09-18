@@ -1,11 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
-<<<<<<< HEAD
  * v1.0.3
-=======
- * v1.0.2
->>>>>>> 23e34cee68dd10d8e34f5ea1d0115d026491c800
  */
 
 /*
