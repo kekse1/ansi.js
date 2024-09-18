@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.0.0
+ * v1.0.3
  */
 
 /*
@@ -56,6 +56,10 @@ class ANSI
 		if(Reflect.is(_data, 'Uint8Array'))
 		{
 			_data = ANSI.toString(_data);
+		}
+		else if(Array.isArray(_data))
+		{
+			return _data;
 		}
 		else if(typeof _data !== 'string')
 		{
@@ -240,24 +244,14 @@ class ANSI
 
 		//
 		var result = '';
-		const parsed = ANSI.parse(_data);
+		const parsed = (Array.isArray(_data) ? _data : ANSI.parse(_data));
 		
 		//
-		const state = Object.create(null);
+		const state = _carrier.__ansi = Object.null({
+			foreground: [],
+			background: []
+		}, _carrier.__ansi);
 		
-		if(_carrier.__ansi)
-		{
-			state.foreground = (_carrier.__ansi.foreground || []);
-			state.background = (_carrier.__ansi.background || []);
-		}
-		else
-		{
-			state.foreground = [];
-			state.background = [];
-		}
-		
-		_carrier.__ansi = state;
-
 		//
 		const getBackground = () => {
 			if(state.background[1]) return state.background[1];
@@ -303,12 +297,14 @@ class ANSI
 			}
 			else if(parsed[i].data.startsWith(ESC + '[39m'))
 			{
-				resetForeground();
+				setBackground(parsed[i].data);
+				//resetForeground();//disabled here.
 				result += parsed[i].data;
 			}
 			else if(parsed[i].data.startsWith(ESC + '[49m'))
 			{
-				resetBackground();
+				setBackground(parsed[i].data);
+				//resetBackground();//disabled now.
 				result += parsed[i].data;
 			}
 			// set colors
@@ -471,7 +467,8 @@ if(typeof global.ANSI === 'undefined')
 			
 			if(ENABLE_COLOR_FILTER)
 			{
-				result = ANSI.colorFilter(result, getStateCarrier(this));
+				result = ANSI.colorFilter(parsed, getStateCarrier(this));
+				//result = ANSI.colorFilter(result, getStateCarrier(this));
 			}
 		}
 	
@@ -506,6 +503,9 @@ if(typeof global.ANSI.String === 'undefined')
 	global.ANSI.String = String;
 	
 	//
+	Reflect.defineProperty(String, 'defaultFG', { value: () => (ESC + '[39m') });
+	Reflect.defineProperty(String, 'defaultBG', { value: () => (ESC + '[49m') });
+
 	Reflect.defineProperty(String.prototype, 'fg', { value: function(_red, _green, _blue, _reset = DEFAULT_RESET)
 	{
 		if(!bool(_reset)) _reset = (this.length > 0);
