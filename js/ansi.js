@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.0.1
+ * v1.0.2
  */
 
 /*
@@ -291,7 +291,8 @@ class ANSI
 				resetBackground();
 				result += parsed[i].data;
 			}
-			else if(parsed[i].data.startsWith(ESC + '[39m'))
+			//disabled now
+			/*else if(parsed[i].data.startsWith(ESC + '[39m'))
 			{
 				resetForeground();
 				result += parsed[i].data;
@@ -300,7 +301,7 @@ class ANSI
 			{
 				resetBackground();
 				result += parsed[i].data;
-			}
+			}*/
 			// set colors
 			else if(parsed[i].data.startsWith(ESC + '[38;'))
 			{
