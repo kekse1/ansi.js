@@ -291,17 +291,18 @@ class ANSI
 				resetBackground();
 				result += parsed[i].data;
 			}
-			//disabled now
-			/*else if(parsed[i].data.startsWith(ESC + '[39m'))
+			else if(parsed[i].data.startsWith(ESC + '[39m'))
 			{
-				resetForeground();
+				setBackground(parsed[i].data);
+				//resetForeground();//disabled here.
 				result += parsed[i].data;
 			}
 			else if(parsed[i].data.startsWith(ESC + '[49m'))
 			{
-				resetBackground();
+				setBackground(parsed[i].data);
+				//resetBackground();//disabled now.
 				result += parsed[i].data;
-			}*/
+			}
 			// set colors
 			else if(parsed[i].data.startsWith(ESC + '[38;'))
 			{
