@@ -1,22 +1,15 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.0.2
- */
-
-/*
- * TODO * more sequences
- * TODO * raw terminal control
- * TODO * maybe `node:readline` (from `js/shared/server.js`)?
- * TODO * and more ..
+ * v1.1.1
  */
 
 //
 const DEFAULT_THROW = true;
 const DEFAULT_COLORS = true;
 const DEFAULT_RESET = null;
-const ENABLE_COLOR_FILTER = true;
-const ALLOW_DISABLE_ANSI = true;
+const DEFAULT_COLOR_FILTER = true;
+const DEFAULT_ALLOW_DISABLE = true;
 
 //
 const DEFAULT_RESET_FOREGROUND = '[390m';
@@ -56,6 +49,10 @@ class ANSI
 		if(Reflect.is(_data, 'Uint8Array'))
 		{
 			_data = ANSI.toString(_data);
+		}
+		else if(Array.isArray(_data))
+		{
+			return _data;
 		}
 		else if(typeof _data !== 'string')
 		{
@@ -240,7 +237,7 @@ class ANSI
 
 		//
 		var result = '';
-		const parsed = ANSI.parse(_data);
+		const parsed = (Array.isArray(_data) ? _data : ANSI.parse(_data));
 		
 		//
 		const state = _carrier.__ansi = Object.null({
@@ -293,14 +290,12 @@ class ANSI
 			}
 			else if(parsed[i].data.startsWith(ESC + '[39m'))
 			{
-				setBackground(parsed[i].data);
-				//resetForeground();//disabled here.
+				setForeground(parsed[i].data);
 				result += parsed[i].data;
 			}
 			else if(parsed[i].data.startsWith(ESC + '[49m'))
 			{
 				setBackground(parsed[i].data);
-				//resetBackground();//disabled now.
 				result += parsed[i].data;
 			}
 			// set colors
@@ -409,8 +404,6 @@ if(typeof global.ANSI === 'undefined')
 	global.ANSI = ANSI;
 	
 	//
-	//TODO/...
-	//
 	Reflect.defineProperty(String.prototype, 'text', { get: function()
 	{
 		const parsed = ANSI.parseCSI(this.valueOf(), null);
@@ -453,7 +446,7 @@ if(typeof global.ANSI === 'undefined')
 		const parsed = ANSI.parseCSI(_chunk, getStateCarrier(this));
 		var result;
 		
-		if(ALLOW_DISABLE_ANSI && !this.isTTY)
+		if(DEFAULT_ALLOW_DISABLE && !this.isTTY)
 		{
 			result = parsed.text;
 		}
@@ -461,9 +454,10 @@ if(typeof global.ANSI === 'undefined')
 		{
 			result = parsed.data;
 			
-			if(ENABLE_COLOR_FILTER)
+			if(DEFAULT_COLOR_FILTER)
 			{
-				result = ANSI.colorFilter(result, getStateCarrier(this));
+				//1st param can also be a string/uint8array/..!
+				result = ANSI.colorFilter(parsed, getStateCarrier(this));
 			}
 		}
 	
@@ -500,6 +494,20 @@ if(typeof global.ANSI.String === 'undefined')
 	//
 	Reflect.defineProperty(String, 'defaultFG', { value: () => (ESC + '[39m') });
 	Reflect.defineProperty(String, 'defaultBG', { value: () => (ESC + '[49m') });
+	
+	Reflect.defineProperty(String.prototype, 'defaultFG', { value: function(_reset = DEFAULT_RESET)
+	{
+		if(!bool(_reset)) _reset = (this.length > 0);
+		return (`${ESC}[39m${this.valueOf()}` +
+			(_reset ? ESC + DEFAULT_RESET_FOREGROUND : ''));
+	}});
+	
+	Reflect.defineProperty(String.prototype, 'defaultBG', { value: function(_reset = DEFAULT_RESET)
+	{
+		if(!bool(_reset)) _reset = (this.length > 0);
+		return (`${ESC}[49m${this.valueOf()}` +
+			(_reset ? ESC + DEFAULT_RESET_BACKGROUND : ''));
+	}});
 
 	Reflect.defineProperty(String.prototype, 'fg', { value: function(_red, _green, _blue, _reset = DEFAULT_RESET)
 	{
@@ -514,6 +522,8 @@ if(typeof global.ANSI.String === 'undefined')
 		return (`${ESC}[48;2;${_red}${_green};${_blue}m${this.valueOf()}` +
 			(_reset ? ESC + DEFAULT_RESET_BACKGROUND : ''));
 	}});
+
+	Reflect.defineProperty(String, 'none', { value: () => (ESC + '[0m') });
 
 	Reflect.defineProperty(String.prototype, 'none', { value: function()
 	{
@@ -704,10 +714,44 @@ if(typeof global.ANSI.Console === 'undefined')
 {
 	//
 	global.ANSI.Console = console;
+
+	//
+	Reflect.defineProperty(console, 'silent', {
+		get: () => {
+			if(typeof global.SILENT === 'boolean')
+			{
+				return global.SILENT;
+			}
+
+			return false;
+		},
+		set: (_value) => {
+			if(typeof _value === 'boolean')
+			{
+				return global.SILENT = _value;
+			}
+
+			return console.silent;
+		}
+	});
 	
 	//
 	const consoleOutput = (_stream, _args) => {
-		var result = util.format(... _args);
+		if(console.silent)
+		{
+			return 0;
+		}
+
+		var result;
+		
+		if(_args.length === 1 && int(_args[0]))
+		{
+			result = eol(_args[0] - 1);
+		}
+		else
+		{
+			result = util.format(... _args);
+		}
 		
 		if(DEFAULT_COLORS)
 		{
@@ -731,6 +775,7 @@ if(typeof global.ANSI.Console === 'undefined')
 		return _stream.write(result);
 	};
 	
+	console.eol = (_count = 1) => consoleOutput('log', [ _count ]);
 	console.log = (... _args) => consoleOutput('log', _args);
 	console.info = (... _args) => consoleOutput('info', _args);
 	console.warn = (... _args) => consoleOutput('warn', _args);
