@@ -22,7 +22,7 @@ The _polyfill_ is still missing, but it's on my TODO list. Either you wait for i
 or feel free to create one. ... if you can't wait.
 
 ## Download
-* [Version **v1.0.0**](js/ansi.js) (created **2024-09-15**)
+* [Version **v1.0.2**](js/ansi.js) (updated **2024-09-18**)
 * [**Polyfill**](js/polyfill.js) (still **TODO**!)
 
 //**TODO**/
