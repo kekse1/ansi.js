@@ -5,27 +5,26 @@
 ## Index
 1. [Introduction](#introduction)
 2. [Download](#download)
-    * [Polyfill](#polyfill)
-3. [Colors](#colors)
-    * [Where it began](#where-it-began)
-    * [How it works](#how-it-works)
+	* [Polyfill](#polyfill)
+3. [Description and Details](#description-and-details)
+	* [Colors](#colors)
+		* [Where it began](#where-it-began)
+		* [How it works](#how-it-works)
+		* [`WriteStream`](#writestream)
+	* [`String`](#string)
+	* [`console`](#console)
 4. [References](#references)
 5. [Copyright and License](#copyright-and-license)
 
 ## Introduction
 //**TODO**/ ...
 
-## Status
-My own version is a bit bigger, but the most parts are available [here](#download).
-
-The _polyfill_ is still missing, but it's on my TODO list. Either you wait for it,
-or feel free to create one. ... if you can't wait.
-
 ## Download
 * [Version **v1.1.1**](js/ansi.js) (updated **2024-09-19**)
 * [**Polyfill**](js/polyfill.js) (still **TODO**!)
 
-//**TODO**/
+//**TODO**// The _polyfill_ is still missing, but it's on my TODO list.
+Either you wait for it, or feel free to create one. ... if you can't wait.
 
 ### Polyfill
 The [polyfill](js/polyfill.js) is important since I created this project
@@ -54,7 +53,8 @@ data, not only on generating the sequences (see the functions in my `ANSI` class
 
 #### `WriteStream`
 Depending on your `const DEFAULT_ALLOW_DISABLE` the code filters out any sequences,
-when a stream is not bound to a real terminal (so `!.isTTY`).
+when a stream is not bound to a real terminal (so `!.isTTY`). Useful when logging to files,
+like `./test.js >test.log 2>&1`.
 
 ### `String`
 Here are the most sequences available, so you can (mostly) directly use smth. like
