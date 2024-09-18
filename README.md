@@ -24,12 +24,13 @@ see the [References](#references) below.
 * [Version **v1.1.1**](js/ansi.js) (updated **2024-09-19**)
 * [**Polyfill**](js/polyfill.js) (still **TODO**!)
 
-//**TODO**// The _polyfill_ is still missing, but it's on my TODO list.
-Either you wait for it, or feel free to create one. ... if you can't wait.
-
 ### Polyfill
 The [polyfill](js/polyfill.js) is important since I created this project
 within another one, where I massively extended the base functions/objects, etc.
+
+> [!WARNING]
+> //**TODO**// it is still missing, but it's on my TODO list. Either you wait for it,
+> or feel free to create one. ... if you can't wait.
 
 ## Description and Details
 At first, take a look at the `const DEFAULT_*` on top of the file. Kinda configuration.. jfyi.
