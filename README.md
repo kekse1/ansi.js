@@ -31,7 +31,7 @@ The [polyfill](js/polyfill.js) is important since I created this project
 within another one, where I massively extended the base functions/objects, etc.
 
 ## Description and Details
-At first, take a look at the `const DEFAULT_` on top of the file. Kinda configuration.. jfyi.
+At first, take a look at the `const DEFAULT_*` on top of the file. Kinda configuration.. jfyi.
 
 ### Colors
 This is where this project 'began' (after many other attempts, mostyle within my
