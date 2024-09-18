@@ -17,7 +17,8 @@
 5. [Copyright and License](#copyright-and-license)
 
 ## Introduction
-//**TODO**/ ...
+For your info: this is about **CSI** ANSI escape sequences. For more info
+see the [References](#references) below.
 
 ## Download
 * [Version **v1.1.1**](js/ansi.js) (updated **2024-09-19**)
@@ -79,7 +80,7 @@ horribly ugly done. And I'm using my own colors for these five default 'streams'
 
 Additionally, I implemented the `console.silent` (Boolean) flag. If set (to `true`),
 there'll be no such `console` output. You can always use the regular `process.stdio[]`
-(here an array of `[ ..stdin, ..stdout, ..stderr ]`), but the regular output like in
+(here an array of `[ .stdin, .stdout, .stderr ]`), but the regular output like in
 `console.log()` is disabled then.
 
 Last but not least, beneath my new `console.eol()` function (optional integer argument)
