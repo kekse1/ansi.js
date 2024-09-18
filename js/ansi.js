@@ -1,7 +1,18 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
+<<<<<<< HEAD
  * v1.1.1
+=======
+ * v1.0.3
+ */
+
+/*
+ * TODO * more sequences
+ * TODO * raw terminal control
+ * TODO * maybe `node:readline` (from `js/shared/server.js`)?
+ * TODO * and more ..
+>>>>>>> d8f9d75acfdbbf36688534fd9ae591c16382c5f6
  */
 
 //
@@ -456,8 +467,13 @@ if(typeof global.ANSI === 'undefined')
 			
 			if(DEFAULT_COLOR_FILTER)
 			{
+<<<<<<< HEAD
 				//1st param can also be a string/uint8array/..!
 				result = ANSI.colorFilter(parsed, getStateCarrier(this));
+=======
+				result = ANSI.colorFilter(parsed, getStateCarrier(this));
+				//result = ANSI.colorFilter(result, getStateCarrier(this));
+>>>>>>> d8f9d75acfdbbf36688534fd9ae591c16382c5f6
 			}
 		}
 	
