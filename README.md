@@ -22,7 +22,7 @@ see the [References](#references) below.
 
 ## Download
 * [**`ansi.js`** Version **v1.3.2**](js/ansi.js) (updated **2024-09-19**)
-* [**`raw.js`** Version **v1.2.0**](js/raw.js) (updated **2024-09-19**)
+* [**`raw.js`** Version **v1.3.0**](js/raw.js) (updated **2024-09-19**)
 * [**Polyfill**](js/polyfill.js) (still **TODO**!)
 
 > [!WARNING]
@@ -45,6 +45,8 @@ to handle any keyboard input way better. See the `DEFAULT_ECHO`.
 By default it's also no longer possible to kill the process via keyboard (via ctrl, etc.);
 but see the `process.escape` (bool), which defaults to `true`, so hitting `<Escape>` key
 will `process.exit()`. .. adapt it to your needs. And see the `DEFAULT_ESCAPE`.
+
+And there's also the `process.hide`, see also `DEFAULT_HIDE`.
 
 ### Colors
 This is where this project 'began' (after many other attempts, mostyle within my

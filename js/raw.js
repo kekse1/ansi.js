@@ -1,12 +1,13 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.2.0
+ * v1.3.0
  */
 
 //
 const DEFAULT_ESCAPE = true;
 const DEFAULT_ECHO = true;
+const DEFAULT_HIDE = true;
 
 //
 // TODO / .. die MAUS-funktionalitaet wollte ich eher GARNED (hier).. eh?!?
@@ -49,6 +50,7 @@ Reflect.defineProperty(process, 'raw', {
 					process.emit('key', _string, _key); });
 			
 			process.stdin.setRawMode(true);
+			process.hide = !!process.hide;
 		}
 		else if(process.stdin.isRaw)
 		{
@@ -65,6 +67,7 @@ Reflect.defineProperty(process, 'raw', {
 			}
 
 			process.stdin.setRawMode(false);
+			process.hide = false;
 		}
 
 		return _value;
@@ -73,6 +76,7 @@ Reflect.defineProperty(process, 'raw', {
 //
 process.__escape = DEFAULT_ESCAPE;
 process.__echo = DEFAULT_ECHO;
+process.__hide = DEFAULT_HIDE;
 
 Reflect.defineProperty(process, 'escape', {
 	get: () => {
@@ -110,6 +114,25 @@ Reflect.defineProperty(process, 'echo', {
 		}
 
 		return process.__echo;
+	}});
+
+Reflect.defineProperty(process, 'hide', {
+	get: () => !!process.__hide,
+	set: (_value) => {
+		if(typeof _value !== 'boolean')
+		{
+			return process.__hide;
+		}
+		else if(_value)
+		{
+			process.stdin.write(String.hide());
+		}
+		else
+		{
+			process.stdin.write(String.show());
+		}
+		
+		return process.__hide = _value;
 	}});
 
 //
