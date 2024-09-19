@@ -22,7 +22,7 @@ see the [References](#references) below.
 
 ## Download
 * [**`ansi.js`** Version **v1.3.2**](js/ansi.js) (updated **2024-09-19**)
-* [**`raw.js`** Version **v1.1.0**](js/raw.js) (created **2024-09-19**)
+* [**`raw.js`** Version **v1.2.0**](js/raw.js) (updated **2024-09-19**)
 * [**Polyfill**](js/polyfill.js) (still **TODO**!)
 
 > [!WARNING]
@@ -40,11 +40,11 @@ Just a simple extension (which I really needed here).
 **Maybe** I'll also include **mouse support** (in a Terminal) soon. Maybe. ..
 
 At the moment it's used to suppress input/echo'ing of `stdin` data, and also
-to handle any keyboard input way better.
+to handle any keyboard input way better. See the `DEFAULT_ECHO`.
 
 By default it's also no longer possible to kill the process via keyboard (via ctrl, etc.);
 but see the `process.escape` (bool), which defaults to `true`, so hitting `<Escape>` key
-will `process.exit()`. .. adapt it to your needs.
+will `process.exit()`. .. adapt it to your needs. And see the `DEFAULT_ESCAPE`.
 
 ### Colors
 This is where this project 'began' (after many other attempts, mostyle within my

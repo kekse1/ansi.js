@@ -1,8 +1,12 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.1.0
+ * v1.2.0
  */
+
+//
+const DEFAULT_ESCAPE = true;
+const DEFAULT_ECHO = true;
 
 //
 // TODO / .. die MAUS-funktionalitaet wollte ich eher GARNED (hier).. eh?!?
@@ -40,7 +44,9 @@ Reflect.defineProperty(process, 'raw', {
 
 			// _key: { sequence, name, ctrl, meta, shift };
 			process.stdin.on('keypress', process.stdin.__onRawKeypress =
-				(_string, _key) => process.emit('key', _string, _key));
+				(_string, _key) => {
+					if(process.echo) process.stdin.write(_string);
+					process.emit('key', _string, _key); });
 			
 			process.stdin.setRawMode(true);
 		}
@@ -65,7 +71,8 @@ Reflect.defineProperty(process, 'raw', {
 	}});
 
 //
-process.__escape = true;
+process.__escape = DEFAULT_ESCAPE;
+process.__echo = DEFAULT_ECHO;
 
 Reflect.defineProperty(process, 'escape', {
 	get: () => {
@@ -73,12 +80,36 @@ Reflect.defineProperty(process, 'escape', {
 		return !!process.__escape;
 	},
 	set: (_value) => {
-		if(typeof _value !== 'boolean')
+		if(typeof _value === 'boolean')
 		{
-			return process.escape;
+			process.__escape = _value;
 		}
 
-		return process.__escape = _value;
+		if(!process.stdin.isRaw)
+		{
+			return null;
+		}
+
+		return process.__escape;
+	}});
+
+Reflect.defineProperty(process, 'echo', {
+	get: () => {
+		if(!process.stdin.isRaw) return null;
+		return !!process.__echo;
+	},
+	set: (_value) => {
+		if(typeof _value === 'boolean')
+		{
+			process.__echo = _value;
+		}
+
+		if(!process.stdin.isRaw)
+		{
+			return null;
+		}
+
+		return process.__echo;
 	}});
 
 //
