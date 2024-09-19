@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.2.0
+ * v1.2.1
  */
 
 //
@@ -49,6 +49,10 @@ class ANSI
 		if(Reflect.is(_data, 'Uint8Array'))
 		{
 			_data = ANSI.toString(_data);
+		}
+		else if(Reflect.is(_data, 'Buffer'))
+		{
+			_data = ANSI.toArray(_data);
 		}
 		else if(Array.isArray(_data))
 		{
@@ -348,6 +352,10 @@ class ANSI
 		{
 			return _data;
 		}
+		else if(Reflect.is(_data, 'Buffer'))
+		{
+			return Uint8Array.from(_data);
+		}
 		else if(typeof _data !== 'string')
 		{
 			if(_throw)
@@ -373,6 +381,10 @@ class ANSI
 		if(typeof _data === 'string')
 		{
 			return _data;
+		}
+		else if(Reflect.is(_data, 'Buffer'))
+		{
+			_data = Uint8Array.from(_data);
 		}
 		else if(!Reflect.is(_data, 'Uint8Array'))
 		{
