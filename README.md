@@ -5,7 +5,6 @@
 ## Index
 1. [Introduction](#introduction)
 2. [Download](#download)
-	* [Polyfill](#polyfill)
 3. [Description and Details](#description-and-details)
 	* [Colors](#colors)
 		* [Where it began](#where-it-began)
@@ -21,14 +20,13 @@ For your info: this is about **CSI** ANSI escape sequences. For more info
 see the [References](#references) below.
 
 ## Download
-* [Version **v1.3.0**](js/ansi.js) (updated **2024-09-19**)
+* [Version **v1.3.2**](js/ansi.js) (updated **2024-09-19**)
 * [**Polyfill**](js/polyfill.js) (still **TODO**!)
 
-### Polyfill
-The [polyfill](js/polyfill.js) is important since I created this project
-within another one, where I massively extended the base functions/objects, etc.
-
 > [!WARNING]
+> The [polyfill](js/polyfill.js) is important since I created this project
+> within another one, where I massively extended the base functions/objects, etc.
+>
 > //**TODO**// it is still missing, but it's on my TODO list. Either you wait for it,
 > or feel free to create one. ... if you can't wait.
 

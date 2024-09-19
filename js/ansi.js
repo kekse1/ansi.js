@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.3.0
+ * v1.3.2
  */
 
 //
@@ -123,13 +123,12 @@ class ANSI
 		});
 
 		//
-		const createItem = (_index) => Object.null({
-			index: _index,
-			//type: '', //TODO/??
+		const createItem = (_offset) => Object.null({
+			offset: _offset,
 			data: '',
-			func: '',//TODO/? "parameter bytes"...
-			param: '',//TODO/? "intermediate bytes"..
-			final: ''//TODO/? "final byte"
+			parameter: '',
+			intermediate: '',
+			final: ''
 		});
 
 		//
@@ -164,12 +163,12 @@ class ANSI
 					case 0:
 						if(byte >= 48 && byte <= 63)
 						{
-							state.item.func += _data[i];
+							state.item.parameter += _data[i];
 						}
 						else if(byte >= 32 && byte <= 47)
 						{
 							state.readyState = 1;
-							state.item.param += _data[i];
+							state.item.intermediate += _data[i];
 						}
 						else
 						{
@@ -192,7 +191,7 @@ class ANSI
 					case 1:
 						if(byte >= 32 && byte <= 47)
 						{
-							state.item.param += _data[i];
+							state.item.intermediate += _data[i];
 						}
 						else
 						{
@@ -252,12 +251,12 @@ class ANSI
 		//
 		const getBackground = () => {
 			if(state.background[1]) return state.background[1];
-			return '';
+			return (ESC + '[39m');
 		};
 		
 		const getForeground = () => {
 			if(state.foreground[1]) return state.foreground[1];
-			return '';
+			return (ESC + '[49m');
 		};
 		
 		const setBackground = (_seq) => {
@@ -279,70 +278,44 @@ class ANSI
 		};
 		
 		//
-		var replacement; for(var i = 0; i < parsed.length; ++i)
+		for(var i = 0; i < parsed.length; ++i)
 		{
 			if(typeof parsed[i] === 'string')
 			{
 				result += parsed[i];
 			}
-			// RE-set colors
 			else if(parsed[i].data.startsWith(ESC + '[0m'))
 			{
 				resetForeground();
 				resetBackground();
-				result += parsed[i].data;
+			}
+			else if(parsed[i].data.startsWith(ESC + DEFAULT_RESET_FOREGROUND))
+			{
+				parsed[i].data = getForeground();
+			}
+			else if(parsed[i].data.startsWith(ESC + DEFAULT_RESET_BACKGROUND))
+			{
+				parsed[i].data = getBackground();
 			}
 			else if(parsed[i].data.startsWith(ESC + '[39m'))
 			{
 				setForeground(parsed[i].data);
-				result += parsed[i].data;
 			}
 			else if(parsed[i].data.startsWith(ESC + '[49m'))
 			{
 				setBackground(parsed[i].data);
-				result += parsed[i].data;
 			}
-			// set colors
 			else if(parsed[i].data.startsWith(ESC + '[38;'))
 			{
 				setForeground(parsed[i].data);
-				result += parsed[i].data;
 			}
 			else if(parsed[i].data.startsWith(ESC + '[48;'))
 			{
 				setBackground(parsed[i].data);
-				result += parsed[i].data;
-			}
-			// own color RE-sets (to previous one(s))
-			else if(parsed[i].data.startsWith(ESC + DEFAULT_RESET_FOREGROUND))
-			{
-				if(replacement = getForeground())
-				{
-					result += replacement;
-				}
-				else
-				{
-					result += ESC + '[39m';
-				}
-			}
-			else if(parsed[i].data.startsWith(ESC + DEFAULT_RESET_BACKGROUND))
-			{
-				if(replacement = getBackground())
-				{
-					result += replacement;
-				}
-				else
-				{
-					result += ESC + '[49m';
-				}
-			}
-			else
-			{
-				result += parsed[i].data;
 			}
 		}
 		
-		return result;
+		return parsed.data;
 	}
 	
 	//
@@ -838,12 +811,12 @@ if(typeof global.ANSI.Console === 'undefined')
 	console.error = (... _args) => consoleOutput('error', _args);
 	console.debug = (... _args) => consoleOutput('debug', _args);
 	//
-	console.eol.force = (_count = 1) => consoleOutput('LOG', [ _count ]);
-	console.log.force = (... _args) => consoleOutput('LOG', _args);
-	console.info.force = (... _args) => consoleOutput('INFO', _args);
-	console.warn.force = (... _args) => consoleOutput('WARN', _args);
-	console.error.force = (... _args) => consoleOutput('ERROR', _args);
-	console.debug.force = (... _args) => consoleOutput('DEBUG', _args);
+	console._eol = (_count = 1) => consoleOutput('LOG', [ _count ]);
+	console._log = (... _args) => consoleOutput('LOG', _args);
+	console._info = (... _args) => consoleOutput('INFO', _args);
+	console._warn = (... _args) => consoleOutput('WARN', _args);
+	console._error = (... _args) => consoleOutput('ERROR', _args);
+	console._debug = (... _args) => consoleOutput('DEBUG', _args);
 
 	//
 
