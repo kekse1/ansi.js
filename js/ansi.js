@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.3.2
+ * v1.3.3
  */
 
 //
@@ -645,6 +645,14 @@ if(typeof global.ANSI.String === 'undefined')
 	Reflect.defineProperty(String.prototype, 'green', { value: String.prototype.info });
 	Reflect.defineProperty(String.prototype, 'blue', { value: String.prototype.debug });
 	Reflect.defineProperty(String.prototype, 'yellow', { value: String.prototype.warn });
+
+	Reflect.defineProperty(String, 'on', { value: () => {
+		return `${ESC}[?5h`;
+	}});
+
+	Reflect.defineProperty(String, 'off', { value: () => {
+		return `${ESC}[?5l`;
+	}});
 
 	Reflect.defineProperty(String, 'up', { value: (_lines = 1) => {
 		return `${ESC}[${_lines}A`;
