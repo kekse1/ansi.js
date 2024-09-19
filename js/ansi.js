@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.1.1
+ * v1.2.0
  */
 
 //
@@ -737,9 +737,13 @@ if(typeof global.ANSI.Console === 'undefined')
 	
 	//
 	const consoleOutput = (_stream, _args) => {
-		if(console.silent)
+		if(console.silent && !_stream.isUpperCase)
 		{
 			return 0;
+		}
+		else
+		{
+			_stream = _stream.toLowerCase();
 		}
 
 		var result;
@@ -775,12 +779,20 @@ if(typeof global.ANSI.Console === 'undefined')
 		return _stream.write(result);
 	};
 	
+	//
 	console.eol = (_count = 1) => consoleOutput('log', [ _count ]);
 	console.log = (... _args) => consoleOutput('log', _args);
 	console.info = (... _args) => consoleOutput('info', _args);
 	console.warn = (... _args) => consoleOutput('warn', _args);
 	console.error = (... _args) => consoleOutput('error', _args);
 	console.debug = (... _args) => consoleOutput('debug', _args);
+	//
+	console.eol.force = (_count = 1) => consoleOutput('LOG', [ _count ]);
+	console.log.force = (... _args) => consoleOutput('LOG', _args);
+	console.info.force = (... _args) => consoleOutput('INFO', _args);
+	console.warn.force = (... _args) => consoleOutput('WARN', _args);
+	console.error.force = (... _args) => consoleOutput('ERROR', _args);
+	console.debug.force = (... _args) => consoleOutput('DEBUG', _args);
 
 	//
 
