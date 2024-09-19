@@ -6,7 +6,7 @@
 
 //
 const DEFAULT_ESCAPE = true;
-const DEFAULT_ECHO = true;
+const DEFAULT_ECHO = false;
 const DEFAULT_HIDE = true;
 
 //
