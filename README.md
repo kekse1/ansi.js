@@ -6,6 +6,7 @@
 1. [Introduction](#introduction)
 2. [Download](#download)
 3. [Description and Details](#description-and-details)
+    * [RAW mode](#raw-mode)
 	* [Colors](#colors)
 		* [Where it began](#where-it-began)
 		* [How it works](#how-it-works)
@@ -34,7 +35,7 @@ see the [References](#references) below.
 ## Description and Details
 At first, take a look at the `const DEFAULT_*` on top of the file. Kinda configuration.. jfyi.
 
-### RAW
+### RAW mode
 Just a simple extension (which I really needed here).
 **Maybe** I'll also include **mouse support** (in a Terminal) soon. Maybe. ..
 
