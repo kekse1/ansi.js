@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.2.1
+ * v1.3.0
  */
 
 //
@@ -426,6 +426,45 @@ if(typeof global.ANSI === 'undefined')
 	{
 		const parsed = ANSI.parseCSI(this.valueOf(), null);
 		return parsed.text.length;
+	}});
+
+	Reflect.defineProperty(String.prototype, 'pad', { value: function(_length, _string, _ansi = true)
+	{
+		if(!int(_length))
+		{
+			throw new Error('Invalid _length argument (expecting an Integer)');
+		}
+		else if(_length === 0)
+		{
+			return this.valueOf();
+		}
+		else if(!string(_string, false))
+		{
+			_string = ' ';
+		}
+
+		const negative = (_length < 0); // '-' = padEnd(); '+' = padStart();
+		const length = Math.abs(_length);
+		const textLength = (_ansi ? this.textLength : this.length);
+		const padLength = (_ansi ? _string.textLength : _string.length);
+		const diff = (length - textLength);
+
+		if(diff <= 0)
+		{
+			return this.valueOf();
+		}
+
+		var pad = ''; while((_ansi ? pad.textLength : pad.length) < diff)
+		{
+			pad += _string;
+		}
+
+		if(negative)
+		{
+			return (this.valueOf() + pad);
+		}
+
+		return (pad + this.valueOf());
 	}});
 
 	//

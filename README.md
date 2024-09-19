@@ -21,7 +21,7 @@ For your info: this is about **CSI** ANSI escape sequences. For more info
 see the [References](#references) below.
 
 ## Download
-* [Version **v1.2.1**](js/ansi.js) (updated **2024-09-19**)
+* [Version **v1.3.0**](js/ansi.js) (updated **2024-09-19**)
 * [**Polyfill**](js/polyfill.js) (still **TODO**!)
 
 ### Polyfill
@@ -73,6 +73,14 @@ again after the string.. or rather: if there's no string available (if it's .len
 it assumes you'd like to enable such a style/color for more strings/data to come. Otherwise,
 any opened escape sequence will automatically be closed again after the string. ... if, and
 only if it's implemented in `String.prototype` - there are some in the `String` itself, btw.
+
+To make this complete, there's also the following function (since **v1.3.0**):
+
+* String.prototype.**pad**(_length, _string, _ansi = true)
+
+It's behavior is similar to e.g. `printf("%[-]20s")` etc. (so negative `_length` is like
+the original `.padEnd()` function). By default the third argument `_ansi` is enabled, so
+you can act like usual, even if your strings contain ANSI Escape Sequences.
 
 ### `console`
 At first, I've overrided the default `console.log()` etc., since the newer version of
