@@ -5,9 +5,10 @@
  */
 
 //
-const DEFAULT_ESCAPE = false; //<Esc>, <Ctrl>+<C>, <Ctrl>+<D>; ..
-const DEFAULT_ECHO = false;
-const DEFAULT_HIDE = false;
+//<Esc>, <Ctrl>+<C>, <Ctrl>+<D>; .. BUT should be partially handled by yourself!!
+const DEFAULT_ESCAPE = false;
+const DEFAULT_ECHO = false; // if true, maybe <Backspace> etc. won't work that right..
+const DEFAULT_HIDE = false; // hide cursor
 
 //
 // TODO / .. die MAUS-funktionalitaet wollte ich eher GARNED (hier).. eh?!?
