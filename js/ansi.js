@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.3.3
+ * v1.3.4
  */
 
 //
@@ -671,7 +671,7 @@ if(typeof global.ANSI.String === 'undefined')
 	}});
 
 	Reflect.defineProperty(String, 'move', { value: (_column = 1, _line = 1) => {
-		const tty = console.TTY; if(!tty) return '';
+		const tty = console.getTTY(true); if(!tty) return '';
 		if(int(_line)) _line = (Math.getIndex(_line, tty.rows) + 1); else _line = null;
 		_column = (Math.getIndex(_column, tty.columns) + 1);
 		if(_line === null) return `${ESC}[${_column}G`;
