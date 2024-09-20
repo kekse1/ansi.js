@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.4.1
+ * v1.4.2
  */
 
 //
@@ -742,6 +742,24 @@ if(typeof global.ANSI.Console === 'undefined')
 {
 	//
 	global.ANSI.Console = console;
+
+	//
+	console.__cursorSave = false;
+	console.__cursorLoad = false;
+
+	Reflect.defineProperty(console, 'load', { value: (_force = false) => {
+		if(!console.__cursorSave && !_force) return false;
+		const stream = console.getTTY(true);
+		stream._write(String.load());
+		return console.__cursorLoad = true;
+	}});
+
+	Reflect.defineProperty(console, 'save', { value: () => {
+		const stream = console.getTTY(true);
+		if(!stream) return false;
+		stream._write(String.save());
+		return console.__cursorSave = true;
+	}});
 
 	//
 	Reflect.defineProperty(console, 'silent', {
