@@ -42,7 +42,7 @@ Reflect.defineProperty(process, 'raw', {
 			process.stdin.on('keypress', process.stdin.__onRawKeypress =
 				(_string, _key) => { if(process.escape) {
 						if(_key.ctrl) { if(_key.name === 'c' || _key.name === 'd') {
-							process.hide = false; process.exit(1); }}
+							process.hide = false; process.exit(255); }}
 						else if(_key === 'escape') { process.hide = false; process.exit(0); }}
 					if(process.echo) process.stdin.write(_string);
 					process.emit('key', _string, _key); });
