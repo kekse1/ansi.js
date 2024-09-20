@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.3.1
+ * v1.3.2
  */
 
 //
@@ -42,8 +42,8 @@ Reflect.defineProperty(process, 'raw', {
 			process.stdin.on('keypress', process.stdin.__onRawKeypress =
 				(_string, _key) => { if(process.escape) {
 						if(_key.ctrl) { if(_key.name === 'c' || _key.name === 'd') {
-							process.hide = false; process.exit(255); }}
-						else if(_key === 'escape') { process.hide = false; process.exit(0); }}
+							process.hide = false; process.exit(int(process.exitCode) ? process.exitCode : 255); }}
+						else if(_key === 'escape') { process.hide = false; process.exit(int(process.exitCode) ? process.exitCode : 0); }}
 					if(process.echo) process.stdin.write(_string);
 					process.emit('key', _string, _key); });
 			
@@ -52,12 +52,6 @@ Reflect.defineProperty(process, 'raw', {
 		}
 		else if(process.stdin.isRaw)
 		{
-			if(process.stdin.__onRawData)
-			{
-				process.stdin.off('data', process.stdin.__onRawData);
-				delete process.stdin.__onRawData;
-			}
-
 			if(process.stdin.__onRawKeypress)
 			{
 				process.stdin.off('keypress', process.stdin.__onRawKeypress);

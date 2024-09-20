@@ -22,7 +22,7 @@ see the [References](#references) below.
 
 ## Download
 * [**`ansi.js`** Version **v1.4.2**](js/ansi.js) (updated **2024-09-20**)
-* [**`raw.js`** Version **v1.3.1**](js/raw.js) (updated **2024-09-20**)
+* [**`raw.js`** Version **v1.3.2**](js/raw.js) (updated **2024-09-21**)
 * [**Polyfill**](js/polyfill.js) (still **TODO**!)
 
 > [!WARNING]
