@@ -1,13 +1,13 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.3.0
+ * v1.3.1
  */
 
 //
-const DEFAULT_ESCAPE = true;
+const DEFAULT_ESCAPE = false; //<Esc>, <Ctrl>+<C>, <Ctrl>+<D>; ..
 const DEFAULT_ECHO = false;
-const DEFAULT_HIDE = true;
+const DEFAULT_HIDE = false;
 
 //
 // TODO / .. die MAUS-funktionalitaet wollte ich eher GARNED (hier).. eh?!?
@@ -37,15 +37,12 @@ Reflect.defineProperty(process, 'raw', {
 				return _value;
 			}
 
-			process.stdin.on('data', process.stdin.__onRawData =
-				(_data) => { if(process.escape &&
-						_data[0] === 27 ||
-						_data[0] === String.fromCharCode(27))
-					process.exit(); });
-
 			// _key: { sequence, name, ctrl, meta, shift };
 			process.stdin.on('keypress', process.stdin.__onRawKeypress =
-				(_string, _key) => {
+				(_string, _key) => { if(process.escape) {
+						if(_key.ctrl) { if(_key.name === 'c' || _key.name === 'd') {
+							process.hide = false; process.exit(1); }}
+						else if(_key === 'escape') { process.hide = false; process.exit(0); }}
 					if(process.echo) process.stdin.write(_string);
 					process.emit('key', _string, _key); });
 			
