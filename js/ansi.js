@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.4.2
+ * v1.4.3
  */
 
 //
@@ -708,6 +708,10 @@ if(typeof global.ANSI.String === 'undefined')
 
 	Reflect.defineProperty(String, 'clearScreen', { value: () => {
 		return `${ESC}[2J`;
+	}});
+
+	Reflect.defineProperty(String, 'clearBuffer', { value: () => {
+		return `${ESC}[3J`;
 	}});
 
 	Reflect.defineProperty(String, 'clearAfter', { value: () => {
