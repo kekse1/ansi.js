@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.4.3
+ * v1.5.0
  */
 
 //
@@ -10,6 +10,7 @@ const DEFAULT_COLORS = true;
 const DEFAULT_RESET = null;
 const DEFAULT_COLOR_FILTER = true;
 const DEFAULT_ALLOW_DISABLE = true;
+const DEFAULT_REPLACE_TABS = 4;
 
 //
 const DEFAULT_RESET_FOREGROUND = '[390m';
@@ -374,6 +375,60 @@ class ANSI
 		
 		return result;
 	}
+
+	static replaceTabs(_data, _spaces = DEFAULT_REPLACE_TABS)
+	{
+		if(typeof _spaces !== 'string')
+		{
+			if(!int(_spaces) || _spaces < 1)
+			{
+				return _data;
+			}
+
+			_spaces = String.repeat(_spaces, ' ');
+		}
+
+		if(Array.isArray(_data))
+		{
+			for(var i = 0; i < _data.length; ++i)
+			{
+				if(typeof _data[i] === 'string')
+				{
+					_data[i] = _data[i].replaceAll('\t', _spaces);
+				}
+			}
+
+			return _data;
+		}
+		
+		const isString = (typeof _data === 'string');
+		var result = '';
+
+		if(isString) for(var i = 0; i < _data.length; ++i)
+		{
+			if(_data[i] === '\t')
+			{
+				result += _spaces;
+			}
+			else
+			{
+				result += _data[i];
+			}
+		}
+		else for(var i = 0; i < _data.length; ++i)
+		{
+			if(_data[i] === 9)
+			{
+				result += _spaces;
+			}
+			else
+			{
+				result += String.fromCharCode(_data[i]);
+			}
+		}
+
+		return (isString ? result : ANSI.toArray(result));
+	}
 }
 
 export default ANSI;
@@ -480,6 +535,11 @@ if(typeof global.ANSI === 'undefined')
 				result = ANSI.colorFilter(parsed, getStateCarrier(this));
 			}
 		}
+
+		if(DEFAULT_REPLACE_TABS)
+		{
+			result = ANSI.replaceTabs(result, DEFAULT_REPLACE_TABS);
+		}
 	
 		if(typeof _chunk !== 'data')
 		{
@@ -500,6 +560,21 @@ if(typeof global.ANSI === 'undefined')
 		const carrier = getStateCarrier(this);
 		return (carrier.__ansi || null);
 	}
+
+	//
+	Reflect.defineProperty(String, 'TABS', { get: () => {
+		if(int(DEFAULT_REPLACE_TABS) && DEFAULT_REPLACE_TABS > 0)
+		{
+			return String.repeat(DEFAULT_REPLACE_TABS, ' ');
+		}
+
+		if(typeof DEFAULT_REPLACE_TABS === 'string')
+		{
+			return DEFAULT_REPLACE_TABS;
+		}
+
+		return null;
+	}});
 
 	//
 	
