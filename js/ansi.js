@@ -562,7 +562,7 @@ if(typeof global.ANSI === 'undefined')
 	}
 
 	//
-	Reflect.defineProperty(String, 'TABS', { get: () => {
+	Reflect.defineProperty(String, 'TAB', { get: () => {
 		if(int(DEFAULT_REPLACE_TABS) && DEFAULT_REPLACE_TABS > 0)
 		{
 			return String.repeat(DEFAULT_REPLACE_TABS, ' ');
