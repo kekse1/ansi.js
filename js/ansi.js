@@ -1,7 +1,11 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
+<<<<<<< HEAD
  * v1.6.0
+=======
+ * v1.5.1
+>>>>>>> 49945e7253a6edacc551ab1559c416cdc28dec42
  */
 
 //
@@ -541,7 +545,7 @@ if(typeof global.ANSI === 'undefined')
 			result = ANSI.replaceTabs(result, DEFAULT_REPLACE_TABS);
 		}
 	
-		if(typeof _chunk !== 'data')
+		if(typeof _chunk !== 'string')
 		{
 			result = ANSI.toArray(result);
 		}
