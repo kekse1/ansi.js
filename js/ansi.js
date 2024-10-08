@@ -628,7 +628,7 @@ if(typeof global.ANSI.String === 'undefined')
 	Reflect.defineProperty(String.prototype, 'bg', { value: function(_red, _green, _blue, _reset = DEFAULT_RESET)
 	{
 		if(!bool(_reset)) _reset = (this.length > 0);
-		return (`${ESC}[48;2;${_red}${_green};${_blue}m${this.valueOf()}` +
+		return (`${ESC}[48;2;${_red};${_green};${_blue}m${this.valueOf()}` +
 			(_reset ? ESC + DEFAULT_RESET_BACKGROUND : ''));
 	}});
 
