@@ -1,10 +1,11 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.6.0
+ * v1.7.0
  */
 
 //
+const DEFAULT_ANSI = true;
 const DEFAULT_THROW = true;
 const DEFAULT_COLORS = true;
 const DEFAULT_RESET = null;
@@ -438,6 +439,7 @@ if(typeof global.ANSI === 'undefined')
 {
 	//
 	global.ANSI = ANSI;
+	global.ANSI.enabled = DEFAULT_ANSI;
 	
 	//
 	Reflect.defineProperty(String.prototype, 'text', { get: function()
@@ -521,7 +523,11 @@ if(typeof global.ANSI === 'undefined')
 		const parsed = ANSI.parseCSI(_chunk, getStateCarrier(this));
 		var result;
 		
-		if(DEFAULT_ALLOW_DISABLE && !this.isTTY)
+		if(!global.ANSI.enabled)
+		{
+			result = parsed.text;
+		}
+		else if(DEFAULT_ALLOW_DISABLE && !this.isTTY)
 		{
 			result = parsed.text;
 		}
@@ -577,7 +583,18 @@ if(typeof global.ANSI === 'undefined')
 	}});
 
 	//
-	
+	Reflect.defineProperty(console, 'ansi', {
+		get: () => !!global.ANSI.enabled,
+		set: (_value) => {
+			if(!bool(_value)) return !!global.ANSI.enabled;
+			return global.ANSI.enabled = _value; }});
+	Reflect.defineProperty(process, 'ansi', {
+		get: () => !!global.ANSI.enabled,
+		set: (_value) => {
+			if(!bool(_value)) return !!global.ANSI.enabled;
+			return global.ANSI.enabled = _value; }});
+
+	//
 }
 
 //

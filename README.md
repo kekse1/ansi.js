@@ -21,7 +21,7 @@ For your info: this is about **CSI** ANSI escape sequences. For more info
 see the [References](#references) below.
 
 ## Download
-* [**`ansi.js`** Version **v1.6.0**](js/ansi.js) (updated **2024-10-08**)
+* [**`ansi.js`** Version **v1.7.0**](js/ansi.js) (updated **2024-10-08**)
 * [**`raw.js`** Version **v1.3.2**](js/raw.js) (updated **2024-09-21**)
 * [**Polyfill**](js/polyfill.js) (still **TODO**!)
 
@@ -34,6 +34,14 @@ see the [References](#references) below.
 
 ## Description and Details
 At first, take a look at the `const DEFAULT_*` on top of the file. Kinda configuration.. jfyi.
+
+### Global ANSI switch
+Please use `process.ansi = (bool)` or `console.ansi = (bool)` to globally enable or disable
+any (CSI) ANSI Escape Sequence in your terminal (used by the `.write()` function in your
+streams).
+
+> [!TIP]
+> `console.ansi` and `process.ansi` are [nearly] the same.
 
 ### RAW mode
 Just a simple extension (which I really needed here).
