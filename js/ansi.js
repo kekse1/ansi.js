@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.5.0
+ * v1.6.0
  */
 
 //
@@ -585,7 +585,7 @@ if(typeof global.ANSI.String === 'undefined')
 {
 	//
 	global.ANSI.String = String;
-	
+
 	//
 	Reflect.defineProperty(String, 'defaultFG', { value: () => (ESC + '[39m') });
 	Reflect.defineProperty(String, 'defaultBG', { value: () => (ESC + '[49m') });
@@ -593,17 +593,31 @@ if(typeof global.ANSI.String === 'undefined')
 	Reflect.defineProperty(String.prototype, 'defaultFG', { value: function(_reset = DEFAULT_RESET)
 	{
 		if(!bool(_reset)) _reset = (this.length > 0);
-		return (`${ESC}[39m${this.valueOf()}` +
+		return (`${String.defaultFG()}${this.valueOf()}` +
 			(_reset ? ESC + DEFAULT_RESET_FOREGROUND : ''));
 	}});
 	
 	Reflect.defineProperty(String.prototype, 'defaultBG', { value: function(_reset = DEFAULT_RESET)
 	{
 		if(!bool(_reset)) _reset = (this.length > 0);
-		return (`${ESC}[49m${this.valueOf()}` +
+		return (`${String.defaultBG()}${this.valueOf()}` +
 			(_reset ? ESC + DEFAULT_RESET_BACKGROUND : ''));
 	}});
 
+	Reflect.defineProperty(String, 'resetFG', { value: () => ('').resetFG() });
+	Reflect.defineProperty(String, 'resetBG', { value: () => ('').resetBG() });
+	
+	Reflect.defineProperty(String.prototype, 'resetFG', { value: function()
+	{
+		return `${ESC}${DEFAULT_RESET_FOREGROUND}${this.valueOf()}`;
+	}});
+	
+	Reflect.defineProperty(String.prototype, 'resetBG', { value: function()
+	{
+		return `${ESC}${DEFAULT_RESET_BACKGROUND}${this.valueOf()}`;
+	}});
+
+	//
 	Reflect.defineProperty(String.prototype, 'fg', { value: function(_red, _green, _blue, _reset = DEFAULT_RESET)
 	{
 		if(!bool(_reset)) _reset = (this.length > 0);
