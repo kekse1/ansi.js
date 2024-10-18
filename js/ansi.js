@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.7.0
+ * v1.7.1
  */
 
 //
@@ -444,14 +444,12 @@ if(typeof global.ANSI === 'undefined')
 	//
 	Reflect.defineProperty(String.prototype, 'text', { get: function()
 	{
-		const parsed = ANSI.parseCSI(this.valueOf(), null);
-		return parsed.text;
+		return ANSI.parseCSI(this.valueOf(), null).text;
 	}});
 	
 	Reflect.defineProperty(String.prototype, 'textLength', { get: function()
 	{
-		const parsed = ANSI.parseCSI(this.valueOf(), null);
-		return parsed.text.length;
+		return ANSI.parseCSI(this.valueOf(), null).text.length;
 	}});
 
 	Reflect.defineProperty(String.prototype, 'pad', { value: function(_length, _string, _ansi = true)
