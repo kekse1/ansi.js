@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.7.1
+ * v1.7.2
  */
 
 //
@@ -12,6 +12,12 @@ const DEFAULT_RESET = null;
 const DEFAULT_COLOR_FILTER = true;
 const DEFAULT_ALLOW_DISABLE = true;
 const DEFAULT_REPLACE_TABS = 4;
+
+//
+const DEFAULT_INFO = [ 173, 234, 58 ];
+const DEFAULT_WARN = [ 232, 226, 37 ];
+const DEFAULT_ERROR = [ 252, 131, 38 ];
+const DEFAULT_DEBUG = [ 150, 180, 200 ];
 
 //
 const DEFAULT_RESET_FOREGROUND = '[390m';
@@ -719,25 +725,25 @@ if(typeof global.ANSI.String === 'undefined')
 	Reflect.defineProperty(String.prototype, 'info', { value: function(_reset = null)
 	{
 		if(!bool(_reset)) _reset = (this.length > 0);
-		return this.fg(173, 234, 68, _reset); //green
+		return this.fg(... DEFAULT_INFO, _reset);
 	}});
 
 	Reflect.defineProperty(String.prototype, 'warn', { value: function(_reset = DEFAULT_RESET)
 	{
 		if(!bool(_reset)) _reset = (this.length > 0);
-		return this.fg(232, 226, 37, _reset); //yellow
+		return this.fg(... DEFAULT_WARN, _reset);
 	}});
 
 	Reflect.defineProperty(String.prototype, 'error', { value: function(_reset = DEFAULT_RESET)
 	{
 		if(!bool(_reset)) _reset = (this.length > 0);
-		return this.fg(252, 131, 38, _reset); //red/orange
+		return this.fg(... DEFAULT_ERROR, _reset);
 	}});
 
 	Reflect.defineProperty(String.prototype, 'debug', { value: function(_reset = DEFAULT_RESET)
 	{
 		if(!bool(_reset)) _reset = (this.length > 0);
-		return this.fg(68, 172, 234, _reset); //blue
+		return this.fg(... DEFAULT_DEBUG, _reset);
 	}});
 
 	Reflect.defineProperty(String.prototype, 'red', { value: String.prototype.error });
