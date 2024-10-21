@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.7.2
+ * v1.8.0
  */
 
 //
@@ -14,7 +14,7 @@ const DEFAULT_ALLOW_DISABLE = true;
 const DEFAULT_REPLACE_TABS = 4;
 
 //
-const DEFAULT_INFO = [ 173, 234, 58 ];
+const DEFAULT_INFO = [ 173, 234, 68 ];
 const DEFAULT_WARN = [ 232, 226, 37 ];
 const DEFAULT_ERROR = [ 252, 131, 38 ];
 const DEFAULT_DEBUG = [ 150, 180, 200 ];
@@ -32,6 +32,74 @@ const ESC = String.fromCharCode(27);
 //
 class ANSI
 {
+	//
+	//todo/w/ state like parse()?!
+	//
+	static filter(_string)
+	{
+		var result = '';
+		var state = -1;
+		var byte;
+
+		for(var i = 0; i < _string.length; ++i)
+		{
+			//
+			byte = _string.charCodeAt(i);
+
+			//
+			if(state > -1) switch(state)
+			{
+				case 0:
+					if(byte >= 48 && byte <= 63)
+					{
+						continue;
+					}
+					else if(byte >= 32 && byte <= 47)
+					{
+						state = 1;
+						continue;
+					}
+					else
+					{
+						state = -1;
+						continue; //TODO/sollte das nicht weg hier!?
+					}
+					break;
+				case 1:
+					if(byte >= 32 && byte <= 47)
+					{
+						continue;
+					}
+					else if(byte >= 64 && byte <= 126)
+					{
+						state = -1;
+						continue;
+					}
+					else
+					{
+						state = -1;
+						continue; //TODO/sollte das nicht weg hier!?
+					}
+					break;
+			}
+			
+			if(state === -1)
+			{
+				if(byte === 27 && _string[i + 1] === '[')
+				{
+					state = 0;
+					++i;
+				}
+				else
+				{
+					result += _string[i];
+				}
+			}
+		}
+
+		return result;
+	}
+
 	static get parse()
 	{
 		return this.parseCSI;
@@ -62,7 +130,7 @@ class ANSI
 		{
 			return _data;
 		}
-		else if(typeof _data !== 'string')
+		else if(!string(_data, true))
 		{
 			return null;
 		}
@@ -78,7 +146,7 @@ class ANSI
 			
 			for(var i = 0; i < _result.length; ++i)
 			{
-				if(typeof _result[i] === 'string')
+				if(string(_result[i], true))
 				{
 					result += _result[i];
 				}
@@ -284,7 +352,7 @@ class ANSI
 		//
 		for(var i = 0; i < parsed.length; ++i)
 		{
-			if(typeof parsed[i] === 'string')
+			if(string(parsed[i], true))
 			{
 				result += parsed[i];
 			}
@@ -333,7 +401,7 @@ class ANSI
 		{
 			return Uint8Array.from(_data);
 		}
-		else if(typeof _data !== 'string')
+		else if(!string(_data, true))
 		{
 			if(_throw)
 			{
@@ -355,7 +423,7 @@ class ANSI
 	
 	static toString(_data, _throw = DEFAULT_THROW)
 	{
-		if(typeof _data === 'string')
+		if(string(_data, true))
 		{
 			return _data;
 		}
@@ -385,21 +453,21 @@ class ANSI
 
 	static replaceTabs(_data, _spaces = DEFAULT_REPLACE_TABS)
 	{
-		if(typeof _spaces !== 'string')
+		if(!string(_spaces, false))
 		{
 			if(!int(_spaces) || _spaces < 1)
 			{
 				return _data;
 			}
 
-			_spaces = String.repeat(_spaces, ' ');
+			_spaces = ' '.repeat(_spaces);
 		}
 
 		if(Array.isArray(_data))
 		{
 			for(var i = 0; i < _data.length; ++i)
 			{
-				if(typeof _data[i] === 'string')
+				if(string(_data[i], false))
 				{
 					_data[i] = _data[i].replaceAll('\t', _spaces);
 				}
@@ -408,7 +476,7 @@ class ANSI
 			return _data;
 		}
 		
-		const isString = (typeof _data === 'string');
+		const isString = string(_data, true);
 		var result = '';
 
 		if(isString) for(var i = 0; i < _data.length; ++i)
@@ -450,12 +518,12 @@ if(typeof global.ANSI === 'undefined')
 	//
 	Reflect.defineProperty(String.prototype, 'text', { get: function()
 	{
-		return ANSI.parseCSI(this.valueOf(), null).text;
+		return ANSI.filter(this.valueOf());
 	}});
 	
 	Reflect.defineProperty(String.prototype, 'textLength', { get: function()
 	{
-		return ANSI.parseCSI(this.valueOf(), null).text.length;
+		return ANSI.filter(this.valueOf()).length;
 	}});
 
 	Reflect.defineProperty(String.prototype, 'pad', { value: function(_length, _string, _ansi = true)
@@ -551,7 +619,7 @@ if(typeof global.ANSI === 'undefined')
 			result = ANSI.replaceTabs(result, DEFAULT_REPLACE_TABS);
 		}
 	
-		if(typeof _chunk !== 'string')
+		if(!string(_chunk, true))
 		{
 			result = ANSI.toArray(result);
 		}
@@ -575,10 +643,10 @@ if(typeof global.ANSI === 'undefined')
 	Reflect.defineProperty(String, 'TAB', { get: () => {
 		if(int(DEFAULT_REPLACE_TABS) && DEFAULT_REPLACE_TABS > 0)
 		{
-			return String.repeat(DEFAULT_REPLACE_TABS, ' ');
+			return ' '.repeat(DEFAULT_REPLACE_TABS);
 		}
 
-		if(typeof DEFAULT_REPLACE_TABS === 'string')
+		if(string(DEFAULT_REPLACE_TABS, true))
 		{
 			return DEFAULT_REPLACE_TABS;
 		}
@@ -606,7 +674,7 @@ if(typeof global.ANSI.String === 'undefined')
 {
 	//
 	global.ANSI.String = String;
-
+	
 	//
 	Reflect.defineProperty(String, 'defaultFG', { value: () => (ESC + '[39m') });
 	Reflect.defineProperty(String, 'defaultBG', { value: () => (ESC + '[49m') });
@@ -638,7 +706,6 @@ if(typeof global.ANSI.String === 'undefined')
 		return `${ESC}${DEFAULT_RESET_BACKGROUND}${this.valueOf()}`;
 	}});
 
-	//
 	Reflect.defineProperty(String.prototype, 'fg', { value: function(_red, _green, _blue, _reset = DEFAULT_RESET)
 	{
 		if(!bool(_reset)) _reset = (this.length > 0);
@@ -878,7 +945,7 @@ if(typeof global.ANSI.Console === 'undefined')
 	//
 	Reflect.defineProperty(console, 'silent', {
 		get: () => {
-			if(typeof global.SILENT === 'boolean')
+			if(bool(global.SILENT))
 			{
 				return global.SILENT;
 			}
@@ -886,7 +953,7 @@ if(typeof global.ANSI.Console === 'undefined')
 			return false;
 		},
 		set: (_value) => {
-			if(typeof _value === 'boolean')
+			if(bool(_value))
 			{
 				return global.SILENT = _value;
 			}
@@ -903,7 +970,7 @@ if(typeof global.ANSI.Console === 'undefined')
 			if(!stream) return console.__flash = false;
 			return !!console.__flash; },
 		set: (_value) => {
-			if(typeof _value !== 'boolean')
+			if(!bool(_value))
 			{
 				return console.flash;
 			}
