@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.8.0
+ * v1.8.1
  */
 
 //
@@ -789,7 +789,7 @@ if(typeof global.ANSI.String === 'undefined')
 		return `${ESC}[39m${this.valueOf()}`;
 	}});
 
-	Reflect.defineProperty(String.prototype, 'info', { value: function(_reset = null)
+	Reflect.defineProperty(String.prototype, 'info', { value: function(_reset = DEFAULT_RESET)
 	{
 		if(!bool(_reset)) _reset = (this.length > 0);
 		return this.fg(... DEFAULT_INFO, _reset);
