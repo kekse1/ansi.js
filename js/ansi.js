@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.8.1
+ * v1.9.0
  */
 
 //
@@ -566,16 +566,18 @@ if(typeof global.ANSI === 'undefined')
 	}});
 
 	//
-	Reflect.defineProperty(process, 'stdio', { get: () => {
-		const result = [
-			process.stdin,
-			process.stdout,
-			process.stderr ];
-		result.stdin = process.stdin;
-		result.stdout = process.stdout;
-		result.stderr = process.stderr;
-		return result;
-	}});
+	const stdio = [ process.stdin, process.stdout, process.stderr ];
+	stdio[0].name = 'stdin'; stdio[1].name = 'stdout'; stdio[2].name = 'stderr';
+	stdio[0].index = 0; stdio[1].index = 1; stdio[2].index = 2;
+
+	Reflect.defineProperty(stdio, 'stdin', { enumerable: true, get: () => stdio[0] });
+	Reflect.defineProperty(stdio, 'stdout', { enumerable: true, get: () => stdio[1] });
+	Reflect.defineProperty(stdio, 'stderr', { enumerable: true, get: () => stdio[2] });
+
+	Reflect.defineProperty(stdio, 'last', { enumerable: false, writable: true, value: Object.null({
+		time: null, stream: null, index: null }) });
+
+	Reflect.defineProperty(process, 'stdio', { enumerable: true, value: stdio });
 
 	//
 	const getStateCarrier = (_stream) => {
@@ -592,7 +594,8 @@ if(typeof global.ANSI === 'undefined')
 	//
 	process.stdout.__proto__.write = function(_chunk, _encoding, _callback, ... _args)
 	{
-		const parsed = ANSI.parseCSI(_chunk, getStateCarrier(this));
+		const stateCarrier = getStateCarrier(this);
+		const parsed = ANSI.parseCSI(_chunk, stateCarrier);
 		var result;
 		
 		if(!global.ANSI.enabled)
@@ -624,13 +627,25 @@ if(typeof global.ANSI === 'undefined')
 			result = ANSI.toArray(result);
 		}
 
+		if(stateCarrier === process)
+		{
+			stdio.last.time = Date.now();
+			stdio.last.stream = this.name;
+			stdio.last.index = this.index;
+		}
+		else
+		{
+			this.last = Date.now();
+		}
+
 		return _write.call(this, result, _encoding, _callback, ... _args);
 	}
 
-	process.stdout.__proto__.resetAnsiState = function()
+	process.stdout.__proto__.resetState = function()
 	{
 		const result = getStateCarrier(this);
-		delete result.__ansi; return result;
+		if(result === process) stdio.last = Object.null({ time: null, stream: null, index: null });
+		else this.last = null; delete result.__ansi; return result;
 	}
 	
 	process.stdout.__proto__.getAnsiState = function()
