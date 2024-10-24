@@ -641,17 +641,51 @@ if(typeof global.ANSI === 'undefined')
 		return _write.call(this, result, _encoding, _callback, ... _args);
 	}
 
+	process.stdout.__proto__.resetAnsiState = function()
+	{
+		const result = getStateCarrier(this);
+		delete result.__ansi; return result;
+	}
+
 	process.stdout.__proto__.resetState = function()
 	{
 		const result = getStateCarrier(this);
-		if(result === process) stdio.last = Object.null({ time: null, stream: null, index: null });
-		else this.last = null; delete result.__ansi; return result;
+		
+		if(result === process)
+		{
+			stdio.last.time = stdio.last.stream = stdio.last.index = null;
+		}
+		else
+		{
+			this.last = null;
+		}
+
+		return result;
 	}
 	
 	process.stdout.__proto__.getAnsiState = function()
 	{
 		const carrier = getStateCarrier(this);
-		return (carrier.__ansi || null);
+		const result = carrier.__ansi;
+
+		if(result)
+		{
+			return Reflect.clone(result);
+		}
+
+		return null;
+	}
+
+	process.stdout.__proto__.getState = function()
+	{
+		const carrier = getStateCarrier(this);
+
+		if(carrier === process)
+		{
+			return Reflect.clone(stdio.last);
+		}
+
+		return carrier.last;
 	}
 
 	//
