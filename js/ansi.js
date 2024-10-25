@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.9.0
+ * v1.9.1
  */
 
 //
@@ -633,11 +633,8 @@ if(typeof global.ANSI === 'undefined')
 			stdio.last.stream = this.name;
 			stdio.last.index = this.index;
 		}
-		else
-		{
-			this.last = Date.now();
-		}
 
+		this.last = Date.now();
 		return _write.call(this, result, _encoding, _callback, ... _args);
 	}
 
