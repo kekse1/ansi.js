@@ -627,14 +627,16 @@ if(typeof global.ANSI === 'undefined')
 			result = ANSI.toArray(result);
 		}
 
+		const now = Date.now();
+
 		if(stateCarrier === process)
 		{
-			stdio.last.time = Date.now();
+			stdio.last.time = now;
 			stdio.last.stream = this.name;
 			stdio.last.index = this.index;
 		}
 
-		this.last = Date.now();
+		this.last = now;
 		return _write.call(this, result, _encoding, _callback, ... _args);
 	}
 
