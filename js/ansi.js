@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.9.1
+ * v1.9.2
  */
 
 //
@@ -516,6 +516,11 @@ if(typeof global.ANSI === 'undefined')
 	global.ANSI.enabled = DEFAULT_ANSI;
 	
 	//
+	Reflect.defineProperty(String.prototype, 'withANSI', { get: function()
+	{
+		return (this.length > this.textLength);
+	}});
+
 	Reflect.defineProperty(String.prototype, 'text', { get: function()
 	{
 		return ANSI.filter(this.valueOf());
