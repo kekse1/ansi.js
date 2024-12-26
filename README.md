@@ -21,12 +21,12 @@ For your info: this is about **CSI** ANSI escape sequences. For more info
 see the [References](#references) below.
 
 ## Download
-* [**`ansi.js`** Version **v1.9.2**](js/ansi.js) (updated **2024-11-13**)
-* [**`raw.js`** Version **v1.3.2**](js/raw.js) (updated **2024-09-21**)
-* [**Polyfill**](js/polyfill.js) (still **TODO**!)
+* [**`ansi.js`** Version **v1.9.2**](src/ansi.js) (updated **2024-11-13**)
+* [**`raw.js`** Version **v1.3.2**](src/raw.js) (updated **2024-09-21**)
+* [**Polyfill**](src/polyfill.js) (still **TODO**!)
 
 > [!WARNING]
-> The [polyfill](js/polyfill.js) is important since I created this project
+> The [polyfill](src/polyfill.js) is important since I created this project
 > within another one, where I massively extended the base functions/objects, etc.
 >
 > //**TODO**// it is still missing, but it's on my TODO list. Either you wait for it,

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.9.2
+ * v2.0.0
  */
 
 //
@@ -451,25 +451,29 @@ class ANSI
 		return result;
 	}
 
-	static replaceTabs(_data, _spaces = DEFAULT_REPLACE_TABS)
+	static replaceTabs(_data, _replace = String.TAB)
 	{
-		if(!string(_spaces, false))
+		if(int(_replace))
 		{
-			if(!int(_spaces) || _spaces < 1)
-			{
-				return _data;
-			}
+			_replace = String.__checkTab(_replace, false);
+		}
+		else if(typeof _replace !== 'string')
+		{
+			_replace = '';
+		}
 
-			_spaces = ' '.repeat(_spaces);
+		if(!_replace)
+		{
+			return _data;
 		}
 
 		if(Array.isArray(_data))
 		{
 			for(var i = 0; i < _data.length; ++i)
 			{
-				if(string(_data[i], false))
+				if(typeof _data[i] === 'string')
 				{
-					_data[i] = _data[i].replaceAll('\t', _spaces);
+					_data[i] = _data[i].replaceAll('\t', _replace);
 				}
 			}
 
@@ -483,7 +487,7 @@ class ANSI
 		{
 			if(_data[i] === '\t')
 			{
-				result += _spaces;
+				result += _replace;
 			}
 			else
 			{
@@ -494,7 +498,7 @@ class ANSI
 		{
 			if(_data[i] === 9)
 			{
-				result += _spaces;
+				result += _replace;
 			}
 			else
 			{
@@ -693,19 +697,40 @@ if(typeof global.ANSI === 'undefined')
 	}
 
 	//
-	Reflect.defineProperty(String, 'TAB', { get: () => {
-		if(int(DEFAULT_REPLACE_TABS) && DEFAULT_REPLACE_TABS > 0)
+	String._TAB = DEFAULT_REPLACE_TABS;
+
+	String.__checkTab = (_value = String._TAB, _change = true) => {
+		var result;
+
+		if(int(_value))
 		{
-			return ' '.repeat(DEFAULT_REPLACE_TABS);
+			if(_value > 0)
+			{
+				result = ' '.repeat(_value);
+			}
+
+			result = '';
+		}
+		else if(typeof _value === 'string')
+		{
+			result = _value;
+		}
+		else
+		{
+			result = '';
 		}
 
-		if(string(DEFAULT_REPLACE_TABS, true))
+		if(!_change)
 		{
-			return DEFAULT_REPLACE_TABS;
+			return result;
 		}
 
-		return null;
-	}});
+		return String._TAB = result;
+	};
+
+	Reflect.defineProperty(String, 'TAB', {
+		get: () => String.__checkTab(String._TAB, true),
+		set: (_value) => String.__checkTab(_value, true) });
 
 	//
 	Reflect.defineProperty(console, 'ansi', {
@@ -898,8 +923,9 @@ if(typeof global.ANSI.String === 'undefined')
 
 	Reflect.defineProperty(String, 'move', { value: (_column = 1, _line = 1) => {
 		const tty = console.getTTY(true); if(!tty) return '';
-		if(int(_line)) _line = (Math.getIndex(_line, tty.rows) + 1); else _line = null;
-		_column = (Math.getIndex(_column, tty.columns) + 1);
+		if(int(_line)) _line = (Math.getIndex.number(_line, tty.rows) + 1);
+		else _line = null;
+		_column = (Math.getIndex.number(_column, tty.columns) + 1);
 		if(_line === null) return `${ESC}[${_column}G`;
 		return `${ESC}[${_line};${_column}H${ESC}[${_line};${_column}f`;
 	}});
