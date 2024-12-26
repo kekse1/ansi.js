@@ -21,7 +21,7 @@ For your info: this is about **CSI** ANSI escape sequences. For more info
 see the [References](#references) below.
 
 ## Download
-* [**`ansi.js`** Version **v1.9.2**](src/ansi.js) (updated **2024-11-13**)
+* [**`ansi.js`** Version **v2.0.0**](src/ansi.js) (updated **2024-12-26**)
 * [**`raw.js`** Version **v1.3.2**](src/raw.js) (updated **2024-09-21**)
 * [**Polyfill**](src/polyfill.js) (still **TODO**!)
 
