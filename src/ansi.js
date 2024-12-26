@@ -626,9 +626,9 @@ if(typeof global.ANSI === 'undefined')
 			}
 		}
 
-		if(DEFAULT_REPLACE_TABS)
+		if(String.TAB)
 		{
-			result = ANSI.replaceTabs(result, DEFAULT_REPLACE_TABS);
+			result = ANSI.replaceTabs(result, String.TAB);
 		}
 	
 		if(!string(_chunk, true))
@@ -708,8 +708,10 @@ if(typeof global.ANSI === 'undefined')
 			{
 				result = ' '.repeat(_value);
 			}
-
-			result = '';
+			else
+			{
+				result = '';
+			}
 		}
 		else if(typeof _value === 'string')
 		{
@@ -720,17 +722,17 @@ if(typeof global.ANSI === 'undefined')
 			result = '';
 		}
 
-		if(!_change)
+		if(_change)
 		{
-			return result;
+			String._TAB = result;
 		}
 
-		return String._TAB = result;
+		return result;
 	};
 
 	Reflect.defineProperty(String, 'TAB', {
-		get: () => String.__checkTab(String._TAB, true),
-		set: (_value) => String.__checkTab(_value, true) });
+		get: () => String.__checkTab(String._TAB, false),
+		set: (_value) => (String._TAB = String.__checkTab(_value, false)) });
 
 	//
 	Reflect.defineProperty(console, 'ansi', {
