@@ -126,7 +126,7 @@ it should print (and only these). In all other cases it's going to use the regul
 * https://invisible-island.net/xterm/ctlseqs/ctlseqs.html
 
 # Contact
-<img src="https://kekse.biz/github.php?override=github:ansi.js&draw&text=dump@kekse.biz&angle=6&size=38pt&fg=150,20,90&font=OpenSans&ro&readonly&h=64&v=16" />
+<img src="https://kekse.biz/github.php?override=github:ansi.js&draw&text=ansi.js@kekse.biz&angle=6&size=38pt&fg=150,20,90&font=OpenSans&ro&readonly&h=64&v=16" />
 
 # Copyright and License
 The Copyright is [(c) Sebastian Kucharczyk](COPYRIGHT.txt),
