@@ -14,7 +14,8 @@
 	* [`String`](#string)
 	* [`console`](#console)
 4. [References](#references)
-5. [Copyright and License](#copyright-and-license)
+5. [Contact](#contact)
+6. [Copyright and License](#copyright-and-license)
 
 ## Introduction
 For your info: this is about **CSI** ANSI escape sequences. For more info
@@ -123,6 +124,9 @@ it should print (and only these). In all other cases it's going to use the regul
 * https://xtermjs.org/docs/api/vtfeatures/
 * https://vt100.net/docs/vt100-ug/chapter3.html#VT52CUP
 * https://invisible-island.net/xterm/ctlseqs/ctlseqs.html
+
+# Contact
+<img src="https://kekse.biz/github.php?override=github:ansi.js&draw&text=dump@kekse.biz&angle=6&size=38pt&fg=150,20,90&font=OpenSans&ro&readonly&h=64&v=16" />
 
 # Copyright and License
 The Copyright is [(c) Sebastian Kucharczyk](COPYRIGHT.txt),
