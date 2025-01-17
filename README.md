@@ -22,8 +22,8 @@ For your info: this is about **CSI** ANSI escape sequences. For more info
 see the [References](#references) below.
 
 ## Download
-* [**`ansi.js`** Version **v2.0.0**](src/ansi.js) (updated **2024-12-26**)
-* [**`raw.js`** Version **v1.3.2**](src/raw.js) (updated **2024-09-21**)
+* [**`ansi.js`** Version v**2.0.0**](src/ansi.js) (updated **2024-12-26**)
+* [**`raw.js`** Version v**1.3.2**](src/raw.js) (updated **2024-09-21**)
 * [**Polyfill**](src/polyfill.js) (still **TODO**!)
 
 > [!WARNING]
@@ -96,7 +96,7 @@ it assumes you'd like to enable such a style/color for more strings/data to come
 any opened escape sequence will automatically be closed again after the string. ... if, and
 only if it's implemented in `String.prototype` - there are some in the `String` itself, btw.
 
-To make this complete, there's also the following function (since **v1.3.0**):
+To make this complete, there's also the following function (since v**1.3.0**):
 
 * String.prototype.**pad**(_length, _string, _ansi = true)
 
