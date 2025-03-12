@@ -21,6 +21,10 @@
 For your info: this is about **CSI** ANSI escape sequences. For more info
 see the [References](#references) below.
 
+### Just for your info
+I also made a `bash` script/extension for easier ANSI escape sequences in the shell.
+It's listed in my [**scripts** respository](https://github.com/kekse1/scripts/#ansish).
+
 ## Download
 * [**`ansi.js`** Version v**2.0.0**](src/ansi.js) (updated **2024-12-26**)
 * [**`raw.js`** Version v**1.3.2**](src/raw.js) (updated **2024-09-21**)
