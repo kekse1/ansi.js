@@ -123,11 +123,16 @@ any `console.*()` can also get only one Integer parameter with the number of new
 it should print (and only these). In all other cases it's going to use the regular
 `util.format()`.
 
-## References
+## References / Links
+
+### ANSI Escape Sequences (in general)
 * https://en.m.wikipedia.org/wiki/ANSI_escape_code
 * https://xtermjs.org/docs/api/vtfeatures/
 * https://vt100.net/docs/vt100-ug/chapter3.html#VT52CUP
 * https://invisible-island.net/xterm/ctlseqs/ctlseqs.html
+
+### Other ANSI tools
+* [My own **`ansi.sh`**](https://github.com/kekse1/scripts/#ansish)
 
 # Contact
 <img src="https://kekse.biz/github.php?override=github:ansi.js&draw&text=ansi.js@kekse.biz&angle=6&size=38pt&fg=150,20,90&font=OpenSans&ro&readonly&h=64&v=16" />
