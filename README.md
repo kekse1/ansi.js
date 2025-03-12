@@ -4,6 +4,7 @@
 
 ## Index
 1. [Introduction](#introduction)
+    * [Just for your info](#just-for-your-info)
 2. [Download](#download)
 3. [Description and Details](#description-and-details)
     * [RAW mode](#raw-mode)
@@ -13,13 +14,15 @@
 		* [`WriteStream`](#writestream)
 	* [`String`](#string)
 	* [`console`](#console)
-4. [References](#references)
+4. [References / Links](#references--links)
+    * [ANSI Escape Sequences (in general)](#ansi-escape-sequences-in-general)
+    * [Other ANSI tools](#other-ansi-tools)
 5. [Contact](#contact)
 6. [Copyright and License](#copyright-and-license)
 
 ## Introduction
 For your info: this is about **CSI** ANSI escape sequences. For more info
-see the [References](#references) below.
+see the [References](#references--links) below.
 
 ### Just for your info
 I also made a `bash` script/extension for easier ANSI escape sequences in the shell.
