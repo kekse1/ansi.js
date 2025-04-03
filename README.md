@@ -2,6 +2,8 @@
 
 # ANSI Escape Sequences @ JavaScript/node.js
 
+<br><br>
+
 ## Index
 1. [Introduction](#introduction)
     * [Just for your info](#just-for-your-info)
@@ -20,6 +22,8 @@
 5. [Contact](#contact)
 6. [Copyright and License](#copyright-and-license)
 
+<br><br>
+
 ## Introduction
 For your info: this is about **CSI** ANSI escape sequences. For more info
 see the [References](#references--links) below.
@@ -27,6 +31,8 @@ see the [References](#references--links) below.
 ### Just for your info
 I also made a `bash` script/extension for easier ANSI escape sequences in the shell.
 It's listed in my [**scripts** respository](https://github.com/kekse1/scripts/#ansish).
+
+<br>
 
 ## Download
 * [**`ansi.js`** Version v**2.0.0**](src/ansi.js) (updated **2024-12-26**)
@@ -39,6 +45,8 @@ It's listed in my [**scripts** respository](https://github.com/kekse1/scripts/#a
 >
 > //**TODO**// it is still missing, but it's on my TODO list. Either you wait for it,
 > or feel free to create one. ... if you can't wait.
+
+<br>
 
 ## Description and Details
 At first, take a look at the `const DEFAULT_*` on top of the file. Kinda configuration.. jfyi.
@@ -126,6 +134,8 @@ any `console.*()` can also get only one Integer parameter with the number of new
 it should print (and only these). In all other cases it's going to use the regular
 `util.format()`.
 
+<br>
+
 ## References / Links
 
 ### ANSI Escape Sequences (in general)
@@ -134,8 +144,12 @@ it should print (and only these). In all other cases it's going to use the regul
 * https://vt100.net/docs/vt100-ug/chapter3.html#VT52CUP
 * https://invisible-island.net/xterm/ctlseqs/ctlseqs.html
 
+<br>
+
 ### Other ANSI tools
 * [My own **`ansi.sh`**](https://github.com/kekse1/scripts/#ansish)
+
+<br><br>
 
 # Contact
 <img src="https://kekse.biz/github.php?override=github:ansi.js&draw&text=ansi.js@kekse.biz&angle=6&size=38pt&fg=150,20,90&font=OpenSans&ro&readonly&h=64&v=16" />
