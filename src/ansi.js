@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v2.0.0
+ * v2.0.1
  */
 
 //
@@ -518,7 +518,7 @@ if(typeof global.ANSI === 'undefined')
 	//
 	global.ANSI = ANSI;
 	global.ANSI.enabled = DEFAULT_ANSI;
-	
+
 	//
 	Reflect.defineProperty(String.prototype, 'withANSI', { get: function()
 	{
@@ -759,6 +759,26 @@ if(typeof global.ANSI.String === 'undefined')
 	Reflect.defineProperty(String, 'defaultFG', { value: () => (ESC + '[39m') });
 	Reflect.defineProperty(String, 'defaultBG', { value: () => (ESC + '[49m') });
 	
+	Reflect.defineProperty(String, 'path', { value: (_path, _reset = DEFAULT_RESET) => {
+		var result, directory, base;
+		const idx = _path.lastIndexOf('/');
+
+		if(idx === -1)
+		{
+			directory = '';
+			base = _path;
+		}
+		else
+		{
+			directory = _path.substr(0, idx);
+			base = _path.substr(idx + 1);
+		}
+
+		return (directory +
+			(directory ? '/' : '') +
+			base.bold(_reset));
+	}});
+			
 	Reflect.defineProperty(String.prototype, 'defaultFG', { value: function(_reset = DEFAULT_RESET)
 	{
 		if(!bool(_reset)) _reset = (this.length > 0);

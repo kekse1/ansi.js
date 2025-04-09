@@ -35,7 +35,7 @@ It's listed in my [**scripts** respository](https://github.com/kekse1/scripts/#a
 <br>
 
 ## Download
-* [**`ansi.js`** Version v**2.0.0**](src/ansi.js) (updated **2024-12-26**)
+* [**`ansi.js`** Version v**2.0.1**](src/ansi.js) (updated **2025-04-09**)
 * [**`raw.js`** Version v**1.3.2**](src/raw.js) (updated **2024-09-21**)
 * [**Polyfill**](src/polyfill.js) (still **TODO**!)
 
