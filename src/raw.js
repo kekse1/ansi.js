@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v1.3.2
+ * v1.3.3
  */
 
 //
@@ -117,11 +117,11 @@ Reflect.defineProperty(process, 'hide', {
 		}
 		else if(_value)
 		{
-			process.stdin.write(String.hide());
+			process.stdin.write(String.hideCursor());
 		}
 		else
 		{
-			process.stdin.write(String.show());
+			process.stdin.write(String.showCursor());
 		}
 		
 		return process.__hide = _value;

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/ https://github.com/kekse1/ansi.js/
- * v2.0.1
+ * v2.0.2
  */
 
 //
@@ -964,11 +964,11 @@ if(typeof global.ANSI.String === 'undefined')
 		return `${ESC}[u`;
 	}});
 
-	Reflect.defineProperty(String, 'show', { value: () => {
+	Reflect.defineProperty(String, 'showCursor', { value: () => {
 		return `${ESC}[?25h`;
 	}});
 
-	Reflect.defineProperty(String, 'hide', { value: () => {
+	Reflect.defineProperty(String, 'hideCursor', { value: () => {
 		return `${ESC}[?25l`;
 	}});
 
